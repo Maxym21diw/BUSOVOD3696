@@ -60,8 +60,9 @@ app.post("/api/order", async (req, res) => {
         const result = await response.json();
 
         if (!result.ok) {
-            throw new Error("Telegram не прийняв повідомлення");
-        }
+    console.error("Telegram error:", result);
+    throw new Error(result.description || "Telegram error");
+}
 
         res.json({ success: true });
 
