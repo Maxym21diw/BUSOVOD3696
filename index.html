@@ -393,65 +393,77 @@
         </div>
     </section>
     <!-- ФОРМА ЗАМОВЛЕННЯ -->
-    <section class="order" id="order">
-        <h2>
-            ЗАМОВИТИ <span>ПЕРЕВЕЗЕННЯ</span>
-        </h2>
-        <p style="color:#bbb; margin-bottom:25px;">
-            Заповніть форму, і ми зв'яжемося з вами.
+<section class="order" id="order">
+    <h2>
+        РОЗРАХУВАТИ <span>ВАРТІСТЬ ПЕРЕВЕЗЕННЯ</span>
+    </h2>
+    <div class="calculator" style="max-width:500px; margin:0 auto 40px; padding:25px; background:#151515; border:1px solid #f5c400; border-radius:12px;">
+        <h3 style="color:#f5c400; margin-bottom:20px;">
+            КАЛЬКУЛЯТОР ВАРТОСТІ
+        </h3>
+        <label for="distance" style="display:block; color:#fff; margin-bottom:8px;">
+            Відстань маршруту (км)
+        </label>
+        <input
+            type="number"
+            id="distance"
+            min="1"
+            step="1"
+            placeholder="Наприклад, 25"
+            style="width:100%; padding:15px; margin-bottom:15px;"
+        >
+        <label for="routeType" style="display:block; color:#fff; margin-bottom:8px;">
+            Тип маршруту
+        </label>
+        <select
+            id="routeType"
+            style="width:100%; padding:15px; margin-bottom:20px; border-radius:7px;"
+        >
+            <option value="30">У межах Києва — 30 грн/км</option>
+            <option value="50">За межами Києва — 50 грн/км</option>
+        </select>
+        <button type="button" onclick="calculatePrice()">
+            РОЗРАХУВАТИ ВАРТІСТЬ
+        </button>
+        <div id="priceResult" style="margin-top:20px; color:#f5c400; font-size:24px; font-weight:bold; text-align:center;">
+        </div>
+        <p style="color:#aaa; font-size:13px; text-align:center; margin-top:15px;">
+            Перші 10 км — 1500 грн. Кожен наступний кілометр оплачується окремо.
         </p>
-        <form id="orderForm">
-            <input
-                type="text"
-                id="name"
-                placeholder="Ваше ім'я"
-                aria-label="Ваше ім'я"
-                autocomplete="name"
-                required
-            >
-            <input
-                type="tel"
-                id="phone"
-                placeholder="Номер телефону"
-                aria-label="Номер телефону"
-                autocomplete="tel"
-                required
-            >
-            <input
-                type="text"
-                id="from"
-                placeholder="Місто та адреса завантаження"
-                aria-label="Місто та адреса завантаження"
-                required
-            >
-            <input
-                type="text"
-                id="to"
-                placeholder="Місто та адреса доставки"
-                aria-label="Місто та адреса доставки"
-                required
-            >
-            <textarea
-                id="cargo"
-                placeholder="Що потрібно перевезти? Опишіть вантаж"
-                aria-label="Опис вантажу"
-                required
-            ></textarea>
-            <input
-                type="date"
-                id="date"
-                aria-label="Бажана дата перевезення"
-            >
-            <textarea
-                id="comment"
-                placeholder="Додаткові побажання або коментар"
-                aria-label="Додаткові побажання або коментар"
-            ></textarea>
-            <button type="submit">
-                НАДІСЛАТИ ЗАЯВКУ
-            </button>
-        </form>
-    </section>
+    </div>
+    <h2>
+        ЗАМОВИТИ <span>ПЕРЕВЕЗЕННЯ</span>
+    </h2>
+    <p style="color:#bbb; margin-bottom:25px;">
+        Заповніть форму, і ми зв'яжемося з вами.
+    </p>
+    <form id="orderForm">
+        <input type="text" id="name" placeholder="Ваше ім'я" aria-label="Ваше ім'я" autocomplete="name" required>
+        <input type="tel" id="phone" placeholder="Номер телефону" aria-label="Номер телефону" autocomplete="tel" required>
+        <input type="text" id="from" placeholder="Місто та адреса завантаження" aria-label="Місто та адреса завантаження" required>
+        <input type="text" id="to" placeholder="Місто та адреса доставки" aria-label="Місто та адреса доставки" required>
+        <textarea id="cargo" placeholder="Що потрібно перевезти? Опишіть вантаж" aria-label="Опис вантажу" required></textarea>
+        <input type="date" id="date" aria-label="Бажана дата перевезення">
+        <textarea id="comment" placeholder="Додаткові побажання або коментар" aria-label="Додаткові побажання або коментар"></textarea>
+        <button type="submit">
+            НАДІСЛАТИ ЗАЯВКУ
+        </button>
+    </form>
+</section>
+<script>
+function calculatePrice() {
+    const distance = Number(document.getElementById("distance").value);
+    const rate = Number(document.getElementById("routeType").value);
+    const result = document.getElementById("priceResult");
+    if (!Number.isFinite(distance) || distance <= 0) {
+        result.textContent = "Введіть правильну відстань";
+        return;
+    }
+    const price = 1500 + Math.max(0, distance - 10) * rate;
+    result.textContent = "Орієнтовна вартість: " +
+        price.toLocaleString("uk-UA") + " грн";
+}
+</script>
     <!-- ЧАСТІ ЗАПИТАННЯ -->
     <section>
         <h2>ЧАСТІ <span>ЗАПИТАННЯ</span></h2>
